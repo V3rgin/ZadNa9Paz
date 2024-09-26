@@ -2,7 +2,6 @@ package com.example.zadna9paz;
 
 import android.os.Bundle;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.util.Patterns;
@@ -10,10 +9,7 @@ import android.widget.EditText;
 import android.widget.Button;
 import android.view.View;
 import android.widget.Toast;
-
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity {
 private EditText editTextName; //deklaracja zmiennych do pracy na przyszłych widokach
@@ -27,12 +23,15 @@ private Button buttonSubmit;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
         editTextName = findViewById(R.id.editTextName);
         editTextSurname = findViewById(R.id.editTextSurname);
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextPhoneNumber = findViewById(R.id.editTextPhoneNumber);
         editTextPassword = findViewById(R.id.editTextPassword);
         editTextConfirmPassword = findViewById(R.id.editTextConfirmPassword);
+        buttonSubmit = findViewById(R.id.buttonSubmit);
+
         buttonSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -52,14 +51,14 @@ private Button buttonSubmit;
                     Toast.makeText(MainActivity.this, "Niepoprawny adres e-mail", Toast.LENGTH_SHORT).show();
                 } else if(phoneNumber.isEmpty()){
                     Toast.makeText(MainActivity.this, "Proszę wprowadzić numer telefonu", Toast.LENGTH_SHORT).show();
-/*                } else if(phoneNumber.parse) {
+                } else if(phoneNumber.length() < 9){
                     Toast.makeText(MainActivity.this, "Niepoprawny numer telefonu", Toast.LENGTH_SHORT).show();
-  */              }
-                else if(password.isEmpty()){
+                } else if(password.isEmpty()){
                     Toast.makeText(MainActivity.this, "Proszę wprowadzić haslo", Toast.LENGTH_SHORT).show();
-                } else if (confirmPassword.isEmpty()){
+                } else if (password.length() < 6){
+                    Toast.makeText(MainActivity.this, "haslo jest za krotkie", Toast.LENGTH_SHORT).show();
+                } else if (confirmPassword.isEmpty() || !(confirmPassword.equals(password))) {
                     Toast.makeText(MainActivity.this, "Proszę potwiedzic haslo", Toast.LENGTH_SHORT).show();
-
                 } else {
                     Toast.makeText(MainActivity.this, "Formularz przeslany poprawnie", Toast.LENGTH_SHORT).show();
                 }
